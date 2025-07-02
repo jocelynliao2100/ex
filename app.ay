@@ -1,1 +1,26 @@
+import streamlit as st
+import pandas as pd
+import matplotlib.pyplot as plt
+
+# 讀取 CSV 檔（GitHub raw 連結）
+csv_url = "https://raw.githubusercontent.com/jocelynliao2100/ex/main/我那靠北的前任%20-%20工作表1.csv"
+
+# 讀取資料
+df = pd.read_csv(csv_url)
+
+# 日期轉換
+df["發文日期"] = pd.to_datetime(df["發文日期"])
+daily_counts = df["發文日期"].value_counts().sort_index()
+
+# 畫圖
+fig, ax = plt.subplots(figsize=(10, 5))
+ax.plot(daily_counts.index, daily_counts.values, marker='o', color='orange')
+ax.set_title("每日發文數量", fontsize=16)
+ax.set_xlabel("日期")
+ax.set_ylabel("發文數量")
+plt.xticks(rotation=45)
+
+# 顯示
+st.title("📈 每日發文數量折線圖")
+st.pyplot(fig)
 
