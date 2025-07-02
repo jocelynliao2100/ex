@@ -48,18 +48,17 @@ if uploaded_file:
             st.pyplot(fig1)
 
             
-            # ===== 每篇文按讚數折線圖 =====
-            st.subheader("❤️ Likes per Post (Line Chart)")
-            top_n = 15  # 可調整顯示前幾名
-            df_likes = df.copy()
-            df_likes["內容摘要"] = df_likes["發文內容"].str.slice(0, 20) + "..."
-            df_likes_sorted = df_likes.sort_values("按讚數", ascending=False).head(top_n)
+            # ===== 每篇發文的按讚數（依時間）折線圖 =====
+            st.subheader("🕒 Likes per Post Over Time")
+            df_time_likes = df.copy()
+            df_time_likes = df_time_likes.dropna(subset=["發文日期", "按讚數"])
+            df_time_likes = df_time_likes.sort_values("發文日期")
 
             fig2, ax2 = plt.subplots(figsize=(10, 5))
-            ax2.plot(df_likes_sorted["內容摘要"], df_likes_sorted["按讚數"], marker="o", linestyle="-", color="teal")
-            ax2.set_xlabel("Post Preview", fontproperties=font_prop)
+            ax2.plot(df_time_likes["發文日期"], df_time_likes["按讚數"], marker="o", linestyle="-", color="green")
+            ax2.set_xlabel("Post Time", fontproperties=font_prop)
             ax2.set_ylabel("Like Count", fontproperties=font_prop)
-            ax2.set_title(f"Top {top_n} Most Liked Posts (Line Chart)", fontproperties=font_prop)
+            ax2.set_title("Likes per Post Over Time", fontproperties=font_prop)
             plt.xticks(rotation=45, fontproperties=font_prop)
             plt.yticks(fontproperties=font_prop)
             st.pyplot(fig2)
