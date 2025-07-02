@@ -73,6 +73,7 @@ if uploaded_file:
             words = pseg.cut(text_all)
             nouns = [word for word, flag in words if flag.startswith("n") and len(word) >= 2]
             counter = Counter(nouns)
+            top_n = 15 
             most_common = counter.most_common(15)
 
             if most_common:
