@@ -1,3 +1,8 @@
 streamlit
 pandas
+python-docx
+beautifulsoup4
+jieba
+plotly
+altair
 matplotlib
